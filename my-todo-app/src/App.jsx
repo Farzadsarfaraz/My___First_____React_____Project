@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 
 function App() {
   const [newItem, setNewItem] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const storedTodos = localStorage.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -21,8 +28,9 @@ function App() {
     ]);
 
     setNewItem("");
-    setError("")
+    setError("");
   }
+
   function toggleTodo(id, completed) {
     setTodos((currentTodos) => {
       return currentTodos.map((todo) => {
@@ -48,7 +56,7 @@ function App() {
           <input
             type="text"
             id="item"
-            placeholder="Enter here your ToDo"
+            placeholder="Enter your ToDo here"
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
           />
@@ -60,7 +68,7 @@ function App() {
       </form>
       <h1 className="header">To do list</h1>
       <ul className="list">
-        {todos.length === 0 && "no Todos"}
+        {todos.length === 0 && "No Todos"}
         {todos.map((todo) => (
           <li key={todo.id}>
             <label>
@@ -68,7 +76,6 @@ function App() {
                 type="checkbox"
                 checked={todo.completed}
                 onChange={(e) => toggleTodo(todo.id, e.target.checked)}
-                readOnly
               />
               {todo.title}
             </label>
