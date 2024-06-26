@@ -5,9 +5,15 @@ import "./App.css";
 function App() {
   const [newItem, setNewItem] = useState("");
   const [todos, setTodos] = useState([]);
+  const [error, setError] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (newItem.trim() === "") {
+      setError("Please enter a task.");
+      return;
+    }
 
     setTodos((currentTodos) => [
       ...currentTodos,
@@ -15,6 +21,7 @@ function App() {
     ]);
 
     setNewItem("");
+    setError("")
   }
   function toggleTodo(id, completed) {
     setTodos((currentTodos) => {
@@ -49,6 +56,7 @@ function App() {
         <button className="btn" type="submit">
           Add
         </button>
+        {error && <p className="error">{error}</p>}
       </form>
       <h1 className="header">To do list</h1>
       <ul className="list">

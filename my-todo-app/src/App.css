@@ -71,32 +71,37 @@
   
   .header {
     font-size: 1.5rem;
+    padding: 5px;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
+    background-color: #09475c;
+    border-radius: 10px;
   }
   
   .list {
     margin: 0;
-    padding: 0;
-    margin-left: 1rem;
+    padding: 10px;
+    margin-left: 0;
     list-style: none;
+    background-color: #09475c;
+    border-radius: 10px;
   }
   
   .list li:has(input:checked) label {
     color: hsl(200, 20%, 40%);
   }
-  
   .list {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 1rem;
   }
   
   .list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
   }
   
   .list li label {
